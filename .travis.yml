@@ -18,7 +18,7 @@ before_install:
   - docker build -t rakesh8sb/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run rakesh8sb/react-test npm run test -- --coverage
+  - docker run -e CI=true rakesh8sb/react-test npm test
 
 deploy:
   provider: script
