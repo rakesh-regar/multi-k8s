@@ -1,15 +1,16 @@
-docker build -t rakesh8sb/multi-client:latest -t rakesh8sb/multi-client:$SHA -f ./client/Dockerfile ./client
-docker build -t rakesh8sb/multi-server:latest -t rakesh8sb/multi-server:$SHA -f ./server/Dockerfile ./server
-docker build -t rakesh8sb/multi-worker:latest -t rakesh8sb/multi-worker:$SHA -f ./worker/Dockerfile ./worker
-docker push rakesh8sb/multi-client:latest
-docker push rakesh8sb/multi-server:latest
-docker push rakesh8sb/multi-worker:latest
+docker build -t rakesh8sb/multi-client-k8s:latest -t rakesh8sb/multi-client-k8s:$SHA -f ./client/Dockerfile ./client
+docker build -t rakesh8sb/multi-server-k8s:latest -t rakesh8sb/multi-server-k8s:$SHA -f ./server/Dockerfile ./server
+docker build -t rakesh8sb/multi-worker-k8s:latest -t rakesh8sb/multi-worker-k8s:$SHA -f ./worker/Dockerfile ./worker
 
-docker push rakesh8sb/multi-client:$SHA
-docker push rakesh8sb/multi-server:$SHA
-docker push rakesh8sb/multi-worker:$SHA
+docker push rakesh8sb/multi-client-k8s:latest
+docker push rakesh8sb/multi-server-k8s:latest
+docker push rakesh8sb/multi-worker-k8s:latest
+
+docker push rakesh8sb/multi-client-k8s:$SHA
+docker push rakesh8sb/multi-server-k8s:$SHA
+docker push rakesh8sb/multi-worker-k8s:$SHA
 
 kubectl apply -f k8s
-kubectl set image deployments/server-deployment server=rakesh8sb/multi-server:$SHA
-kubectl set image deployments/client-deployment client=rakesh8sb/multi-client:$SHA
-kubectl set image deployments/worker-deployment worker=rakesh8sb/multi-worker:$SHA
+kubectl set image deployments/server-deployment server=rakesh8sb/multi-server-k8s:$SHA
+kubectl set image deployments/client-deployment client=rakesh8sb/multi-client-k8s:$SHA
+kubectl set image deployments/worker-deployment worker=rakesh8sb/multi-worker-k8s:$SHA
